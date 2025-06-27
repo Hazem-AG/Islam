@@ -291,6 +291,9 @@
                 font-size: 1.2rem;
                 padding: 1rem;
             }
+            .hidden {
+    display: none !important;
+}
         }
     </style>
 </head>
@@ -906,41 +909,178 @@
         </span>
     </div>
 </div>
-                <a href="#" class="btn-islamic inline-block mt-6">
-                    <i class="fas fa-share-alt"></i> شارك الخطة مع أحبابك
-                </a>
+                <a href="#" class="btn-islamic inline-block mt-6" id="shareBtn">
+    <i class="fas fa-share-alt"></i> شارك الخطة مع أحبابك
+</a>
+                <!-- نافذة المشاركة المنبثقة -->
+<div id="sharePopup" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+    <div class="bg-[var(--card-bg)] w-full max-w-md mx-4 p-6 rounded-lg shadow-lg border border-[var(--primary-color)]">
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-bold text-[var(--primary-color)]">مشاركة الخطة</h3>
+            <button onclick="document.getElementById('sharePopup').classList.add('hidden')" 
+                    class="text-gray-400 hover:text-[var(--primary-color)] text-2xl">
+                &times;
+            </button>
+        </div>
+        
+        <div class="grid grid-cols-3 gap-4">
+            <!-- واتساب -->
+            <a href="#" id="whatsappShare" class="flex flex-col items-center p-4 bg-[rgba(212,175,55,0.1)] rounded-lg hover:bg-[rgba(212,175,55,0.2)] transition">
+                <i class="fab fa-whatsapp text-3xl text-green-500 mb-2"></i>
+                <span>واتساب</span>
+            </a>
+            
+            <!-- فيسبوك -->
+            <a href="#" id="facebookShare" class="flex flex-col items-center p-4 bg-[rgba(212,175,55,0.1)] rounded-lg hover:bg-[rgba(212,175,55,0.2)] transition">
+                <i class="fab fa-facebook text-3xl text-blue-600 mb-2"></i>
+                <span>فيسبوك</span>
+            </a>
+            
+            <!-- تويتر -->
+            <a href="#" id="twitterShare" class="flex flex-col items-center p-4 bg-[rgba(212,175,55,0.1)] rounded-lg hover:bg-[rgba(212,175,55,0.2)] transition">
+                <i class="fab fa-twitter text-3xl text-blue-400 mb-2"></i>
+                <span>تويتر</span>
+            </a>
+            
+            <!-- تليجرام -->
+            <a href="#" id="telegramShare" class="flex flex-col items-center p-4 bg-[rgba(212,175,55,0.1)] rounded-lg hover:bg-[rgba(212,175,55,0.2)] transition">
+                <i class="fab fa-telegram text-3xl text-blue-300 mb-2"></i>
+                <span>تليجرام</span>
+            </a>
+            
+            <!-- نسخ الرابط -->
+            <a href="#" id="copyLink" class="flex flex-col items-center p-4 bg-[rgba(212,175,55,0.1)] rounded-lg hover:bg-[rgba(212,175,55,0.2)] transition">
+                <i class="fas fa-link text-3xl text-[var(--primary-color)] mb-2"></i>
+                <span>نسخ الرابط</span>
+            </a>
+            
+            <!-- البريد الإلكتروني -->
+            <a href="#" id="emailShare" class="flex flex-col items-center p-4 bg-[rgba(212,175,55,0.1)] rounded-lg hover:bg-[rgba(212,175,55,0.2)] transition">
+                <i class="fas fa-envelope text-3xl text-gray-500 mb-2"></i>
+                <span>البريد</span>
+            </a>
+        </div>
+        
+        <div class="mt-6 text-center">
+            <button onclick="document.getElementById('sharePopup').classList.add('hidden')" 
+                    class="btn-islamic px-4 py-2">
+                <i class="fas fa-times"></i> إغلاق
+            </button>
+        </div>
+    </div>
+</div>
             </div>
         </section>
 
         <!-- Footer -->
         <footer class="text-center py-8 mt-8 border-t border-[rgba(212,175,55,0.1)]">
             
-            <p class="text-gray-400 mb-2">&copy;  خطة العودة إلى الله </p>
-            <p class="text-gray-500 text-sm">Designed and developed by Hazem Emara </p>
-
+            <p class="text-gray-400 mb-2">&copy; 2025 خطة العودة إلى الله. جميع الحقوق محفوظة.</p>
+            <p class="text-gray-500 text-sm">تصميم وتطوير بقلوب محبة لله ورسوله</p>
         </footer>
     </div>
 
     <script>
-        // Simple progress bar animation
-        document.addEventListener('DOMContentLoaded', function() {
-            const progressBar = document.getElementById('progressBar');
-            let width = 0;
-            const interval = setInterval(function() {
-                if (width >= 100) {
-                    clearInterval(interval);
-                } else {
-                    width++;
-                    progressBar.style.width = width + '%';
-                }
-            }, 20);
-            
-            // Floating button click event
-            const fab = document.querySelector('.floating-action-btn');
-            fab.addEventListener('click', function() {
-                alert('يمكنك هنا الوصول إلى أدوات المساعدة في الرحلة الإيمانية');
+        
+document.addEventListener('DOMContentLoaded', function() {
+    // Animation for progress bar
+    const progressBar = document.getElementById('progressBar');
+    let width = 0;
+    const interval = setInterval(function() {
+        if (width >= 100) {
+            clearInterval(interval);
+        } else {
+            width++;
+            progressBar.style.width = width + '%';
+        }
+    }, 20);
+    
+    // Floating button click event - Show Islamic Apps Popup
+    const fab = document.querySelector('.floating-action-btn');
+    const popup = document.createElement('div');
+    
+    // Create popup content
+    popup.innerHTML = `
+        <div class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+            <div class="bg-[var(--card-bg)] w-full max-w-md mx-4 p-6 rounded-lg shadow-lg border border-[var(--primary-color)]">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold text-[var(--primary-color)]">أدوات وتطبيقات إسلامية</h3>
+                    <button class="text-gray-400 hover:text-[var(--primary-color)] text-2xl" onclick="this.parentElement.parentElement.parentElement.remove()">
+                        &times;
+                    </button>
+                </div>
+                
+                <div class="space-y-4">
+                    <a href="https://play.google.com/store/apps/details?id=org.goldenquran.freesoft" target="_blank" class="flex items-center p-3 bg-[rgba(212,175,55,0.1)] rounded-lg hover:bg-[rgba(212,175,55,0.2)] transition">
+                        <i class="fas fa-book-quran text-[var(--primary-color)] text-2xl ml-3"></i>
+                        <div>
+                            <h4 class="font-bold">تطبيق المصحف الشريف</h4>
+                            <p class="text-sm text-gray-400">تطبيق القرآن الكريم مع التفسير</p>
+                        </div>
+                    </a>
+                    
+                    <a href="https://play.google.com/store/apps/details?id=com.reworewo.prayertimes" target="_blank" class="flex items-center p-3 bg-[rgba(212,175,55,0.1)] rounded-lg hover:bg-[rgba(212,175,55,0.2)] transition">
+                        <i class="fas fa-mosque text-[var(--primary-color)] text-2xl ml-3"></i>
+                        <div>
+                            <h4 class="font-bold">مواقيت الصلاة</h4>
+                            <p class="text-sm text-gray-400">تطبيق دقيق لمواقيت الصلاة والأذان</p>
+                        </div>
+                    </a>
+                    
+                    <a href="https://play.google.com/store/apps/details?id=com.mmmoussa.iqra" target="_blank" class="flex items-center p-3 bg-[rgba(212,175,55,0.1)] rounded-lg hover:bg-[rgba(212,175,55,0.2)] transition">
+                        <i class="fas fa-microphone-lines text-[var(--primary-color)] text-2xl ml-3"></i>
+                        <div>
+                            <h4 class="font-bold">تطبيق حفظ القرأن الكريم</h4>
+                            <p class="text-sm text-gray-400">حفظ القرأن الكريم بأستخدام الذكاء الاصطناعي</p>
+                        </div>
+                    </a>
+                    
+                    <a href="https://play.google.com/store/apps/details?id=com.noor.sa" target="_blank" class="flex items-center p-3 bg-[rgba(212,175,55,0.1)] rounded-lg hover:bg-[rgba(212,175,55,0.2)] transition">
+                        <i class="fas fa-hands-praying text-[var(--primary-color)] text-2xl ml-3"></i>
+                        <div>
+                            <h4 class="font-bold">أذكار المسلم</h4>
+                            <p class="text-sm text-gray-400">تطبيق الأذكار اليومية والأدعية</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="mt-6 text-center">
+                    <button onclick="this.parentElement.parentElement.remove()" class="btn-islamic px-4 py-2">
+                        <i class="fas fa-times"></i> إغلاق
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Append popup to body when floating button is clicked
+    fab.addEventListener('click', function() {
+        document.body.appendChild(popup);
+    });
+
+    // Share button functionality
+    document.getElementById('shareBtn').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('sharePopup').classList.remove('hidden');
+        
+        const pageUrl = encodeURIComponent(window.location.href);
+        const pageTitle = encodeURIComponent(document.title);
+        const shareText = encodeURIComponent("اكتشفت هذه الخطة الرائعة للعودة إلى الله، أشاركها معك:");
+        
+        document.getElementById('whatsappShare').href = `https://wa.me/?text=${shareText}%20${pageUrl}`;
+        document.getElementById('facebookShare').href = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
+        document.getElementById('twitterShare').href = `https://twitter.com/intent/tweet?text=${shareText}&url=${pageUrl}`;
+        document.getElementById('telegramShare').href = `https://t.me/share/url?url=${pageUrl}&text=${shareText}`;
+        document.getElementById('emailShare').href = `mailto:?subject=${pageTitle}&body=${shareText}%20${pageUrl}`;
+        
+        document.getElementById('copyLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert('تم نسخ الرابط بنجاح!');
             });
         });
-    </script>
+    });
+});
+</script>
 </body>
 </html>
